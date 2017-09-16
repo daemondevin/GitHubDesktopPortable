@@ -1,0 +1,23 @@
+#bootstrap and build
+before_script: "./script/bootstrap"
+script: "./script/cibuild"
+
+#environment
+language: ruby
+rvm:
+  - 2.4.0
+
+branches:
+  only:
+    - gh-pages
+    - /.*/
+
+notifications:
+  email: false
+
+env:
+  global:
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+
+sudo: false
+cache: bundler
