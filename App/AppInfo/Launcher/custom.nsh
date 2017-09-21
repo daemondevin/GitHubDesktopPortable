@@ -154,14 +154,11 @@ ${SegmentPreExec}
 !macroend
 ${SegmentPostExecPrimary}
 	POSTEXECCHECK:
-	Sleep 3000
-	${If} ${ProcessExists} GitHubDesktop.exe
-		${TerminateProcess} GitHubDesktop.exe $0
-		${If} $0 == -1
-			Goto POSTEXECCHECK
-		${ElseIf} $0 == 0
-			Goto POSTEXECDONE
-		${EndIf}
+	${IfThen} ${ProcessExists} "GitHubDesktop.exe" ${|} ${TerminateProcess} "GitHubDesktop.exe" $0 ${|}
+	${If} $0 == -1
+		Goto POSTEXECCHECK
+	${ElseIf} $0 == 0
+		Goto POSTEXECDONE
 	${EndIf}
 	POSTEXECDONE:
 !macroend
@@ -213,6 +210,7 @@ ${SegmentUnload}
 		IfFileExists "${APPDIR}\app-$0\*.*" 0 +2
 		RMDir /r "${APPDIR}\app-$0"
 	${EndIf}
+	Delete "${RUNTIME}"
 !macroend
 !macro PreDirMove
 	Push `${CONFIG}`
