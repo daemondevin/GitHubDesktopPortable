@@ -6,6 +6,7 @@
 
 ;= VARIABLES 
 ;= ################
+Var Postpone
 
 ;= DEFINES
 ;= ################
@@ -95,6 +96,12 @@ ${Segment.OnInit}
 	Quit
 	${ReadAppInfoConfig} $1 "Version" "ProgramVersion"
 	System::Call `${SETBUILD}`
+	${IfNot} ${Errors}
+		${ReadLauncherConfig} $2 "Launch" "ProgramExecutable"
+		${IfNot} "$2" == "${APP}\app-$1\${APP}.exe"
+			${WriteLauncherConfig} "Launch" "ProgramExecutable" "${APP}\app-$1\${APP}.exe"
+		${EndIf}
+	${EndIf}
 !macroend
 !macro OS
 	${If} ${IsNT}
@@ -152,15 +159,18 @@ ${SegmentPreExec}
 		AccessControl::GrantOnFile '$DOCUMENTS\GitHub' (S-1-5-32-545) FULLACCESS
 	${EndIf}
 !macroend
-${SegmentPostExecPrimary}
-	POSTEXECCHECK:
-	${IfThen} ${ProcessExists} "GitHubDesktop.exe" ${|} ${TerminateProcess} "GitHubDesktop.exe" $0 ${|}
-	${If} $0 == -1
-		Goto POSTEXECCHECK
-	${ElseIf} $0 == 0
-		Goto POSTEXECDONE
-	${EndIf}
-	POSTEXECDONE:
+!macro OverrideExecuteFunction
+	${StdUtils.ExecShellAsUser} $0 "$ExecString" "" "$Parameters"
+	!AddPluginDir "${OTHER}\Source\Plugins"
+	FindProcDLL::WaitProcEnd "GitHubDesktop.exe" -1
+	StrCpy $Postpone false
+	CHECKPROCESS:
+		StrCmp $Postpone true "" +2
+		Sleep 2000
+		StrCpy $Postpone true
+	FindProcDLL::WaitProcEnd `GitHubDesktop.exe` -1
+	FindProcDLL::FindProc `GitHubDesktop.exe`
+	StrCmp $R0 1 CHECKPROCESS
 !macroend
 ${SegmentUnload}
 	FindFirst $0 $1 `${APPDIR}\app-*`
