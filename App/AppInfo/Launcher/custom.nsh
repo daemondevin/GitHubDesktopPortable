@@ -95,12 +95,6 @@ ${Segment.OnInit}
 	Quit
 	${ReadAppInfoConfig} $1 "Version" "ProgramVersion"
 	System::Call `${SETBUILD}`
-	; ${IfNot} ${Errors}
-		; ${ReadLauncherConfig} $2 "Launch" "ProgramExecutable"
-		; ${IfNot} "$2" == "${APP}\app-$1\${APP}.exe"
-			; ${WriteLauncherConfig} "Launch" "ProgramExecutable" "${APP}\app-$1\${APP}.exe"
-		; ${EndIf}
-	; ${EndIf}
 !macroend
 !macro OS
 	${If} ${IsNT}
@@ -158,6 +152,17 @@ ${SegmentPreExec}
 		AccessControl::GrantOnFile '$DOCUMENTS\GitHub' (S-1-5-32-545) FULLACCESS
 	${EndIf}
 !macroend
+${SegmentPostExecPrimary}
+	POSTEXECCHECK:
+	Sleep 1500
+	${IfThen} ${ProcessExists} GitHubDesktop.exe ${|} ${TerminateProcess} GitHubDesktop.exe $0 ${|}
+	${If} $0 == -1
+		Goto POSTEXECCHECK
+	${ElseIf} $0 == 0
+		Goto POSTEXECDONE
+	${EndIf}
+	POSTEXECDONE:
+!macroend
 ${SegmentUnload}
 	FindFirst $0 $1 `${APPDIR}\app-*`
 	ReadEnvStr $2 BUILD
@@ -195,6 +200,9 @@ ${SegmentUnload}
 	FindNext $0 $1
 	Goto -10
 	FindClose $0
+	ReadEnvStr $0 BUILD
+	IfFileExists `${APPDIR}\app-$0\*.*` 0 +2
+	RMDir /r `${APPDIR}\app-$0`
 !macroend
 !macro PreDirMove
 	Push `${CONFIG}`

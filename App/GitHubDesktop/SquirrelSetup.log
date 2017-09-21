@@ -1,0 +1,5 @@
+﻿2017-09-21 03:27:22> Program: Starting Squirrel Updater: --download https://central.github.com/api/deployments/desktop/desktop/latest?version=1.0.0&env=production
+2017-09-21 03:27:22> Program: Fetching update information, downloading from https://central.github.com/api/deployments/desktop/desktop/latest?version=1.0.0&env=production
+2017-09-21 03:27:22> CheckForUpdateImpl: Using existing staging user ID: fc514f03-245d-55a7-897e-0789c688edc6
+2017-09-21 03:27:22> CheckForUpdateImpl: Downloading RELEASES file from https://central.github.com/api/deployments/desktop/desktop/latest?version=1.0.0&env=production
+2017-09-21 03:27:22> FileDownloader: Downloading url: https://central.github.com/api/deployments/desktop/desktop/latest/RELEASES?version=1.0.0&env=production&id=GitHubDesktop&localVersion=1.0.0&arch=amd64
