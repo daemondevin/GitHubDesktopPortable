@@ -6,6 +6,7 @@
 
 ;= VARIABLES 
 ;= ################
+Var Old
 
 ;= DEFINES
 ;= ################
@@ -152,40 +153,20 @@ ${SegmentPreExec}
 		AccessControl::GrantOnFile '$DOCUMENTS\GitHub' (S-1-5-32-545) FULLACCESS
 	${EndIf}
 !macroend
-${SegmentPostExecPrimary}
+${SegmentPostExec}
 	POSTEXECCHECK:
-	Sleep 1500
-	${IfThen} ${ProcessExists} GitHubDesktop.exe ${|} ${TerminateProcess} GitHubDesktop.exe $0 ${|}
-	${If} $0 == -1
-		Goto POSTEXECCHECK
-	${ElseIf} $0 == 0
-		Goto POSTEXECDONE
+	Sleep 3000
+	${If} ${ProcessExists} GitHubDesktop.exe
+		${TerminateProcess} GitHubDesktop.exe $0
+		${If} $0 == -1
+			Goto POSTEXECCHECK
+		${ElseIf} $0 == 0
+			Goto POSTEXECDONE
+		${EndIf}
 	${EndIf}
 	POSTEXECDONE:
 !macroend
 ${SegmentUnload}
-	FindFirst $0 $1 `${APPDIR}\app-*`
-	ReadEnvStr $2 BUILD
-	UPLOOP:
-		StrCmp $1 "" UPDONE
-		StrCpy $3 $1 4
-		StrCmp $3 "app-" 0 UPNEXT
-		StrCpy $1 $1 "" 4
-		Push `$2.0`
-		Push `$1.0`
-		Call Compare
-		Pop $3
-		${If} $3 > 1
-			${If} ${FileExists} "${APPDIR}\app-$1\${APP}.exe"
-				${WriteAppInfoConfig} "Version" "ProgramVersion" "$1"
-				${WriteAppInfoConfig} "Version" "PackageVersion" "$1.0"
-			${EndIf}
-		${EndIf}
-		UPNEXT:
-			FindNext $0 $1
-		Goto UPLOOP
-	UPDONE:
-	FindClose $0
 	FindFirst $0 $1 `$LOCALAPPDATA\Microsoft\*`
 	StrCmpS $0 "" +12
 	StrCmpS $1 "" +11
@@ -200,9 +181,35 @@ ${SegmentUnload}
 	FindNext $0 $1
 	Goto -10
 	FindClose $0
-	ReadEnvStr $0 BUILD
-	IfFileExists `${APPDIR}\app-$0\*.*` 0 +2
-	RMDir /r `${APPDIR}\app-$0`
+	FindFirst $0 $1 `${APPDIR}\app-*`
+	ReadEnvStr $2 BUILD
+	StrCpy $Old $2
+	UPLOOP:
+		StrCmp $1 "" UPDONE
+		StrCpy $3 $1 4
+		StrCmp $3 "app-" 0 UPNEXT
+		StrCpy $1 $1 "" 4
+		Push `$2.0`
+		Push `$1.0`
+		Call Compare
+		Pop $3
+		${If} $3 > 1
+			${If} ${FileExists} "${APPDIR}\app-$1\${APP}.exe"
+				${WriteAppInfoConfig} "Version" "ProgramVersion" "$1"
+				${WriteAppInfoConfig} "Version" "PackageVersion" "$1.0"
+				IfFileExists `${APPDIR}\packages\GitHubDesktop-$1-delta.nupkg` 0 +2
+				Delete `${APPDIR}\packages\GitHubDesktop-$1-delta.nupkg`
+				IfFileExists `${APPDIR}\packages\GitHubDesktop-$1-full.nupkg` 0 +2
+				Delete `${APPDIR}\packages\GitHubDesktop-$1-full.nupkg`
+			${EndIf}
+		${EndIf}
+		UPNEXT:
+			FindNext $0 $1
+		Goto UPLOOP
+	UPDONE:
+	FindClose $0
+	IfFileExists `${APPDIR}\app-$Old\*.*` 0 +2
+	RMDir /r `${APPDIR}\app-$Old`
 !macroend
 !macro PreDirMove
 	Push `${CONFIG}`
