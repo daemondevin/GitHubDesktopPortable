@@ -19,6 +19,7 @@ All downloads available in the [Releases section][D1]. This portable application
 * No need for any external software - simply download extract and run!
 * Packaged in PortableApps.com format for easy integration.
 * Self-sustaining; no need to update this package as it should update itself.
+* During runtime, when you're browsing [GitHub.com][C2], you can click the green _Clone_ button and select `Open in Desktop` and it'll open in GitHub Desktop Portable.
 
 ## System Requirements
 * Microsoft Windows 7 or later.
