@@ -9,7 +9,7 @@ To recompile this PAF you must use my version of the [PortableApps.com Launcher]
 ## Download
 All downloads available in the [Releases section][D1]. This portable application was packaged using a modified version of the [PortableApps.com][D2] Launcher.
 
- [D1]: https://github.com/demondevin/DiscordPortable/releases/latest
+ [D1]: https://github.com/daemondevin/GitHubDesktopPortable/releases
  [D2]: http//portableapps.com/
 
 ## Features
