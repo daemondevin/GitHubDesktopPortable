@@ -27,6 +27,10 @@ All downloads available in the [Releases section][D1]. This portable application
 * [PortableApps.com Platform][R1] (Optional)
 
  [R1]: http://portableapps.com/download
+ 
+## Note
+This does not require admin, just run it from the App directroy and not the root of the folder.
+ 
 
 ## Credits
 * GitHub Desktop Portable is a redistribution of the
