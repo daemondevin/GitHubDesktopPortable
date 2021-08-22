@@ -4,7 +4,7 @@ GitHub Desktop Portable is a portable version of the [GitHub Desktop][C1] applic
 ## Support
 To recompile this PAF you must use my version of the [PortableApps.com Launcher][S1].
 
- [S1]: https://github.com/demondevin/portableapps.comlauncher
+ [S1]: https://github.com/daemondevin/Launcher
 
 ## Download
 All downloads available in the [Releases section][D1]. This portable application was packaged using a modified version of the [PortableApps.com][D2] Launcher.
