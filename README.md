@@ -2,9 +2,9 @@
 GitHub Desktop Portable is a portable version of the [GitHub Desktop][C1] application. Extend your GitHub workflow beyond your browser with GitHub Desktop, completely redesigned with Electron. Get a unified cross-platform experience that’s completely open source and ready to customize.
 
 ## Support
-To recompile this PAF you must use my version of the [PortableApps.com Launcher][S1].
+To recompile this PAF you must use my [PortableApps Compiler][S1].
 
- [S1]: https://github.com/demondevin/portableapps.comlauncher
+ [S1]: https://github.com/daemondevin/pac-man
 
 ## Download
 All downloads available in the [Releases section][D1]. This portable application was packaged using a modified version of the [PortableApps.com][D2] Launcher.
@@ -32,17 +32,17 @@ All downloads available in the [Releases section][D1]. This portable application
 * GitHub Desktop Portable is a redistribution of the
   [GitHub Desktop][C1] App, developed by [GitHub, Inc.][C2].
 * [PortableApps.com Suite][R1] by [PortableApps.com][D2].
-* [PortableApps.com Launcher][S1] developed by [demon.devin][C3].
+* [PortableApps Compiler][S1] developed by [daemon.devin][C3].
 
  [C1]: https://desktop.github.com/
  [C2]: https://github.com/
- [C3]: https://github.com/demondevin
+ [C3]: https://github.com/daemondevin
 
 ## License
 
 * Portable application code released under [the MIT license][L1].
 * The GitHub Desktop [EULA][L2].
 
- [L1]: https://raw.githubusercontent.com/demondevin/GitHubDesktopPortable/master/LICENSE
+ [L1]: https://raw.githubusercontent.com/daemondevin/GitHubDesktopPortable/master/LICENSE
  [L2]: https://desktop.github.com/eula/
  
