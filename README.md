@@ -30,7 +30,7 @@ Downloads are in the [Releases section](../../releases/latest). The package is i
 `GitHubDesktopPortable.ini`, next to the launcher, holds the user settings. If it gets damaged, or you want to go back to the defaults, copy `Other\\Source\\GitHubDesktopPortable.ini` over it.
 
 ```INI
-\[GitHubDesktopPortable]
+[GitHubDesktopPortable]
 AdditionalParameters=
 RunLocally=false
 UpdateCheck=true
